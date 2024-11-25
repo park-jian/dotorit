@@ -1,0 +1,64 @@
+.bottom-sheet-container {
+    width: 360px;
+    position: absolute; /* fixed를 absolute로 변경 */
+    left: 50%; /* 중앙 정렬을 위해 추가 */
+    transform: translateX(-50%); /* 중앙 정렬을 위해 추가 */
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
+    
+  }
+  
+  .bottom-sheet-backdrop {
+    position: fixed; /* absolute를 fixed로 변경 */
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.2s ease-out;
+  }
+  
+  .bottom-sheet-content {
+    position: absolute;
+    width: 360px; /* 너비 지정 */
+    height: 568px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 20px;
+    animation: slideIn 0.3s ease-out;
+    max-height: 90vh;
+    overflow-y: auto;
+    transition: transform 0.2s ease-out;
+  }
+  
+  
+  .bottom-sheet-handle {
+    width: 48px;
+    height: 4px;
+    background-color: #E0E0E0;
+    border-radius: 2px;
+    margin: 0 auto 20px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }

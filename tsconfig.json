@@ -1,0 +1,17 @@
+{
+  // "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // ... 기존 옵션들
+    // "baseUrl": "src",
+    "types": ["node"],
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "jsx": "react-jsx",  // 이 줄을 추가합니다
+    "module": "esnext",  // 이 줄을 추가하거나 수정합니다
+    "moduleResolution": "node",  // 이 줄을 추가합니다
+    "esModuleInterop": true,  // 이 줄을 추가합니다
+    "target": "es2017",  // 이 줄을 추가합니다
+    "lib": ["dom", "dom.iterable", "esnext"]  // 이 줄을 추가합니다
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "node_modules/msw"],
+  "exclude": ["src/**/__tests__/*"]
+}

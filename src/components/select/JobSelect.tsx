@@ -3,6 +3,7 @@ import React from 'react';
 export interface SelectionData {
   title: string;
   items: string[];
+  keyword: string;
   isMultiSelect?: boolean;
 }
 

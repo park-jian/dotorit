@@ -15,7 +15,7 @@ const UserComponent: React.FC = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get('/user');
-        debugger;
+        
         setUser(response.data);
       } catch (err) {
         setError('Failed to fetch user data');

@@ -12,18 +12,21 @@ interface PageLayoutProps {
     text: string;
     onClick: () => void;
     disabled?: boolean;
+    footerClass?: string;
+    textClass?: string;
   };
   headerButton?: {
     text: string;
     onClick: () => void;
     disabled?: boolean;
-    class?: string;
+    headerClass?: string;
+    textClass?: string;
   };
 }
 
 const PageLayout = ({ title, children, onBack, actionButton, headerButton }: PageLayoutProps) => {
   return (
-    <div className="relative max-w-md mx-auto bg-white overflow-x-hidden"> 
+    <div className="relative max-w-md mx-auto h-full overflow-x-hidden"> 
     {/* min-h-screen */}
       {/* Header */}
       <Header title={title} onBack={onBack} headerButton={headerButton}/>

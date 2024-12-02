@@ -2,11 +2,12 @@ import api from '../api/axiosConfig';
 
 export const tokenUtils = {
   setTokens: (accessToken: string) => {
+    if (!accessToken) return;
     api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    console.log('Token set:', api.defaults.headers.common['Authorization']);
   },
 
   clearTokens: () => {
-    //sessionStorage.removeItem('access_token');
     delete api.defaults.headers.common['Authorization'];
   },
 

@@ -1,16 +1,37 @@
 import React, { useState } from 'react';
 import ic_arrow_left from '/ic_arrow_left.png';
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, useLocation } from 'react-router-dom';
+import {handleSignUp} from '../../api/user';
+interface UserData {
+  nickname: string;
+  selectedCharacter: string;
+  selectedColor: string;
+  job: string;
+  personalHistory: string;
+  corporateForm: string;
+  myStatus: string[];
+  boardKeywords: string[];
+  profileImage: File
+}
 const InterestSelection: React.FC = () => {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const navigate = useNavigate();
+  const location = useLocation();
   const interests = [
     '트렌드', '실무 노하우', '커리어 성장',
     '인사이트', '프로덕트', '업계 동향',
     '취업/이직', '기업 정보', '멘토 찾아요',
     '회사생활', '프로젝트', '교육 후기'
   ];
+  const userData = location.state as UserData || JSON.parse(localStorage.getItem('userData') || '');
+// 데이터가 없으면 이전 페이지로 리다이렉트
+// useEffect(() => {
+//   if (!userData) {
+//     navigate('/job-select');
+//   }
+// }, [userData, navigate]);
+
+  if (!userData) return null;
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests(prev => 
@@ -22,6 +43,17 @@ const InterestSelection: React.FC = () => {
   const handleGoBack = () => {
     navigate(-1); // 이전 페이지로 이동
   };
+  const handleSignup = async () => {
+    const allData = {
+      ...userData,
+      boardKeywords: selectedInterests, // 선택된 태그들 추가
+      simpleIntroduce: "" //가입 단계에서 공란
+    };
+    //서버와 api통신
+    console.log(allData)
+    await handleSignUp(allData);
+  }
+  const isValid = selectedInterests.length > 0;
   return (
     <div className="flex justify-center  w-full h-screen bg-white">
       <div className="w-[360px] h-full relative">
@@ -72,7 +104,7 @@ const InterestSelection: React.FC = () => {
 
       {/* Footer */}
       <div className="absolute bottom-0 w-[360px] h-[80px] top-[661px]">
-        <button className={`absolute top-[16px] left-[16px] w-[328px] h-[48px] rounded-lg px-[70px] py-[15px]  flex items-center justify-center ${selectedInterests.length > 0 ? 'bg-[#212121]' : 'bg-[#BDBDBD]'} `}>
+        <button onClick={handleSignup} disabled={!isValid} className={`absolute top-[16px] left-[16px] w-[328px] h-[48px] rounded-lg px-[70px] py-[15px]  flex items-center justify-center ${selectedInterests.length > 0 ? 'bg-[#212121]' : 'bg-[#BDBDBD]'} `}>
           <span className='text-white text-center font-medium text-sm leading-[19.6px] tracking-[-0.35px]'>가입완료</span>
         </button>
       </div>

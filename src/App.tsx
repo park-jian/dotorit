@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Outlet, Navigate} from 'react-router-dom';
+import '@ckeditor/ckeditor5-build-classic/build/translations/ko';
 //import { useAppStore } from './store'
 //메인페이지
 import Home from './pages/Home';
@@ -25,13 +26,14 @@ import ModifyProfile from './pages/mypage/ModifyProfile'; //프로필 편집
 //Board
 import BlogPostDetail from './pages/board/BlogPostDetail'; //게시물 보기
 import SearchFilterPage from './pages/board/SearchFilterPage';//게시물 쓰기
+import PostEditor from './pages/board/PostEditor';//에디터
 
 // import SocialLogin from './socialLogin/SocialLogin';
 // import SocialLoginRedirect from './socialLogin/SocialLoginRedirect';
 // import RegisterPage from './socialLogin/RegisterPage';
 // import AxiosTest from './socialLogin/AxiosTest';
 
-import {AuthProvider, useAuth } from './auth/AuthContext';
+// import {AuthProvider, useAuth } from './auth/AuthContext';
 
     // <AuthProvider>
     //   {/* <Router> */}
@@ -94,7 +96,8 @@ import {AuthProvider, useAuth } from './auth/AuthContext';
 
               <Route path="/board/blog-post" element={<BlogPostDetail />} />
               <Route path="/board/blog-write" element={<SearchFilterPage />} />
-
+              <Route path="/board/editor" element={<PostEditor />} />
+              
               {/* <Route path="/users/register" element={<UserRegister />} />
               <Route path="/users/password/new" element={<PrivateRoute><PasswordSearch /></PrivateRoute>} />
               <Route path="/users/join_success" element={<PrivateRoute><RegisterSuccess /></PrivateRoute>} />
@@ -126,10 +129,10 @@ import {AuthProvider, useAuth } from './auth/AuthContext';
     };
 const Layout: React.FC = () => {
   return (
-    <AuthProvider>
-    <div className='flex flex-col justify-center items-center h-screen border'>
+    // <AuthProvider>
+    <div className='flex flex-col justify-center items-center h-full border'>
       <div className="w-[360px] h-full overflow-y-auto">
-        <div className="w-full  ">
+        <div className="w-full h-full ">
           
           {/* <Header /> */}
         {/* </div> */}
@@ -138,7 +141,7 @@ const Layout: React.FC = () => {
         </div>
       </div>
     </div>
-    </AuthProvider>
+    // </AuthProvider>
   );
 }
 export default App

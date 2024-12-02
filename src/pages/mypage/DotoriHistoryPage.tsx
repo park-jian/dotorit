@@ -55,7 +55,7 @@ const DotoriHistoryPage = () => {
       headerButton={{
         text: '도토리 사용 가이드',
         onClick: () => {},
-        class: `text-xs font-normal leading-[140%] flex items-center tracking-[-0.025em] text-[#757575] mr-4 absolute right-0`
+        headerClass: `text-xs font-normal leading-[140%] flex items-center tracking-[-0.025em] text-[#757575] mr-4 absolute right-0`
       }}
     >
       <div className="flex items-center gap-2 px-4 py-4 mt-12 h-[92px] w-[360px] bg-[#FBEFE3]">

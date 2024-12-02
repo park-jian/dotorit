@@ -1,22 +1,34 @@
-// useDebounce.ts
 import { useCallback, useRef } from 'react';
 
-type Timer = ReturnType<typeof setTimeout>;
+// 단순화된 타입 정의
+interface DebouncedFunction<TArgs extends unknown[]> {
+  (...args: TArgs): void;
+  cancel: () => void;
+}
 
-// unknown을 사용하여 any를 피하면서도 범용성 유지
-export function useDebounce<Args extends unknown[], Return>(
-  callback: (...args: Args) => Return,
+export const useDebounce = <TArgs extends unknown[]>(
+  callback: (...args: TArgs) => unknown,
   delay: number
-): (...args: Args) => void {
-  const timeoutRef = useRef<Timer | null>(null);
+): DebouncedFunction<TArgs> => {
+  const timeoutRef = useRef<NodeJS.Timeout>();
 
-  return useCallback((...args: Args) => {
+  const debouncedFunction = useCallback(
+    (...args: TArgs) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
+        void callback(...args);
+      }, delay);
+    },
+    [callback, delay]
+  ) as DebouncedFunction<TArgs>;
+
+  debouncedFunction.cancel = useCallback(() => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
+  }, []);
 
-    timeoutRef.current = setTimeout(() => {
-      callback(...args);
-    }, delay);
-  }, [callback, delay]);
-}
+  return debouncedFunction;
+};

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ic_arrow_left from '/ic_arrow_left.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation  } from 'react-router-dom';
 import JobSelect, {SelectionData } from '../../components/select/JobSelect';
 
 const JobSelection: React.FC = () => {
+  const location = useLocation();
+  const { nickname, selectedCharacter, selectedColor, profileImage } = location.state;
   // API로 받아올 데이터를 위한 상태
   const [sectionData, setSectionData] = useState<SelectionData[]>([]);
   // 선택된 값들을 관리하는 상태
@@ -18,18 +20,22 @@ const JobSelection: React.FC = () => {
     const dummyData: SelectionData[] = [
       {
         title: '직무',
+        keyword: "job",
         items: ['기획/PM', 'UX/UI 디자인', '브랜드 디자인', '프론트엔드 개발', '백엔드 개발', 'AI/데이터']
       },
       {
         title: '경력',
+        keyword: "personalHistory",
         items: ['경력없음', '신입-2년', '3년-5년', '6년-9년', '10년 이상']
       },
       {
         title: '기업 형태',
+        keyword: "corporateForm",
         items: ['스타트업', '유니콘 기업', '중기업', '대기업', '외국계 기업']
       },
       {
         title: '내 상태 태그 (복수 선택 가능)',
+        keyword: "myStatus",
         items: ['프로이직러', '직무전환', '창업가', '비전공자 출신', '경력 미니어', 
                 '자격증 수집가', '대학생', '구직중', '틸러터', '프리랜서', 'N잡러', '스티브 죽덕'],
         isMultiSelect: true
@@ -39,7 +45,7 @@ const JobSelection: React.FC = () => {
     setSectionData(dummyData);
     const initialSelections = dummyData.reduce((acc, section) => ({
       ...acc,
-      [section.title]: []
+      [section.keyword]: []
     }), {});
     //initialSelections 예시
     // {
@@ -52,7 +58,7 @@ const JobSelection: React.FC = () => {
   }, []); // 실제 API 연동 시 이 useEffect는 제거
 
   const handleSelection = (section: string, item: string) => {
-    const sectionConfig = sectionData.find(d => d.title === section);
+    const sectionConfig = sectionData.find(d => d.keyword === section);
     
     setSelections(prev => {
       if (sectionConfig?.isMultiSelect) {
@@ -72,6 +78,22 @@ const JobSelection: React.FC = () => {
 
   const handleNext = () => {
     // 다음 단계 처리 로직
+    const allData = {
+      nickname,
+      selectedCharacter,
+      selectedColor,
+      job: selections.job[0], // 단일 선택이므로 첫 번째 값만 사용
+      personalHistory: selections.personalHistory[0], // 단일 선택이므로 첫 번째 값만 사용
+      corporateForm: selections.corporateForm[0], // 단일 선택이므로 첫 번째 값만 사용
+      myStatus: selections.myStatus, // 복수 선택 가능한 배열 그대로 사용
+      profileImage: profileImage
+    };
+    //localStorage.setItem('userData', JSON.stringify(allData));
+  
+  // 다음 페이지로 이동하면서 데이터 전달
+    navigate('/interest-select', {  // 실제 이동할 경로로 수정 필요
+      state: allData
+    });
     console.log('Selected values:', selections);
   };
   // 각 섹션의 표시 여부를 결정하는 함수
@@ -82,13 +104,13 @@ const JobSelection: React.FC = () => {
     const previousSection = sectionData[index - 1];
     if (!previousSection) return false;
     
-    const previousSelections = selections[previousSection.title] || [];
+    const previousSelections = selections[previousSection.keyword] || [];
     return previousSelections.length > 0 && shouldShowSection(index - 1);
   };
   // 모든 섹션이 선택되었는지 확인
   const isAllSectionsSelected = (): boolean => {
     return sectionData.every(section => { //모든 결과가 true여야 true반환
-      const sectionSelections = selections[section.title] || [];
+      const sectionSelections = selections[section.keyword] || [];
       return sectionSelections.length > 0;
     });
   };
@@ -134,10 +156,10 @@ const JobSelection: React.FC = () => {
         {sectionData.map((section, index) => (
           visibleSections[index] && (
             <JobSelect
-              key={section.title}
+              key={section.keyword}
               data={section}
-              selectedItems={selections[section.title]}
-              onSelect={(item) => handleSelection(section.title, item)}
+              selectedItems={selections[section.keyword]}
+              onSelect={(item) => handleSelection(section.keyword, item)}
             />
           )
         ))}

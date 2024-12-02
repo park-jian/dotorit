@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import tokenUtils from '../../utils/tokenUtils';
+// import api from '../../api/axiosConfig';
 const LoginCallback = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -14,7 +15,9 @@ const LoginCallback = () => {
     if (accessToken) {
       // 토큰 저장
      // localStorage.setItem('accessToken', accessToken);
-     tokenUtils.setTokens(accessToken);
+      tokenUtils.setTokens(accessToken);
+      // 토큰 설정 확인
+     console.log('Headers after setting:', accessToken);
       // isNewUser 값에 따라 다른 페이지로 리다이렉트
       if (isNewUser) {
         navigate('/profile'); // 신규 사용자는 온보딩 페이지로

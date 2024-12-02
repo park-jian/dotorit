@@ -1,0 +1,28 @@
+.document-editor {
+    border: 1px solid #c4c4c4;
+    display: flex;
+    flex-direction: column-reverse;  /* 순서를 반대로 */
+    border-radius: 4px;
+    min-height: 400px;
+    position: relative;  /* 상대 위치 지정 */
+  }
+  
+  .document-editor__toolbar {
+    position: sticky;  /* 스크롤시에도 고정 */
+    bottom: 0;  /* 하단에 고정 */
+    background: #fff;
+    padding: 8px;
+    border-top: 1px solid #c4c4c4;  /* 상단 테두리 */
+    border-bottom: none;  /* 하단 테두리 제거 */
+    z-index: 1000;  /* 다른 요소들 위에 표시 */
+  }
+  
+  .document-editor__editable-container {
+    padding: 20px;
+    flex-grow: 1;
+  }
+  
+  .ck-content {
+    min-height: 300px;
+    padding-bottom: 60px;  /* 툴바 높이만큼 하단 여백 추가 */
+  }

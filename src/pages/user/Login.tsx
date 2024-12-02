@@ -6,17 +6,17 @@ export default function Login() {
   //const [error, setError] = useState<string | null>(null);
   const handleLogin = (social: 'kakao' | 'naver') => {
     let loginUrl = '';
-    //if (social === 'kakao') {
+   // if (social === 'kakao') {
       loginUrl = `${import.meta.env.VITE_SERVER_URL}/oauth2/authorization/${social}`;
-   // } 
-    // else {
-    //   //loginUrl = `${import.meta.env.VITE_SERVER_URL}/login/oauth2/code/${social}`;
-    //   loginUrl = `${import.meta.env.VITE_SERVER_URL}/oauth2/authorization/${social}`;
+  //  } 
+     //else {
+      // loginUrl = `${import.meta.env.VITE_SERVER_URL}/login/oauth2/code/${social}`;
+      // loginUrl = `${import.meta.env.VITE_SERVER_URL}/oauth2/authorization/${social}`;
     // }
     window.location.href = loginUrl;
   };
   return (
-    <div className="flex flex-col items-center relative w-full h-[100dvh] overflow-hidden bg-custom-bg px-6">
+    <div className="flex flex-col items-center relative w-full h-full overflow-hidden bg-custom-bg px-6">
       {/*로고*/}
       <div className="px-2 w-full pt-[131px]">
         <img src={logo} alt="Dotoring Logo" className="w-23 h-6" />

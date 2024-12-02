@@ -10,7 +10,10 @@
     "moduleResolution": "node",  // 이 줄을 추가합니다
     "esModuleInterop": true,  // 이 줄을 추가합니다
     "target": "es2017",  // 이 줄을 추가합니다
-    "lib": ["dom", "dom.iterable", "esnext"]  // 이 줄을 추가합니다
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "paths": {
+      "@ckeditor/ckeditor5-build-classic": ["./node_modules/@ckeditor/ckeditor5-build-classic"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "node_modules/msw"],
   "exclude": ["src/**/__tests__/*"]

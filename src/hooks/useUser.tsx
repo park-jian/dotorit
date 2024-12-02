@@ -10,6 +10,7 @@ export const useLogin = () => {
   
     return useMutation({
       mutationFn: async ({ email, password }: { email: string; password: string }) => {
+        
         const response = await api.post('/open-api/v1/users/login', 
           { email, password },
           { withCredentials: true }
@@ -56,12 +57,11 @@ export const useSignup = (social) => {
     });
 };
 // 추가 정보와 함께 최종 회원가입 hook
-export const useSocialAdditionalSignup = () => {
+  export const useSocialAdditionalSignup = () => {
     const login = useLogin();
     
     return useMutation({
-        mutationFn: async ({ socialData, additionalInfo }: {
-            socialData: any;  // 소셜 로그인 response data
+        mutationFn: async ({ additionalInfo }: {
             additionalInfo: {
                 nickname?: string;//필수값과 선택값 구분해서 수정하기
                 job?: string;
@@ -75,7 +75,6 @@ export const useSocialAdditionalSignup = () => {
         }) => {
             // 최종 회원가입 API 호출
             const response = await api.post('/api/v1/user', {
-                ...socialData,      // 소셜 로그인에서 받은 정보
                 ...additionalInfo   // 사용자가 입력한 추가 정보
             });
             
@@ -89,6 +88,8 @@ export const useSocialAdditionalSignup = () => {
             }
             throw new Error(response.data.result.result_message);
         }
+      })
+    };
    
 // 로그아웃 훅
 
@@ -149,7 +150,7 @@ export const useLogout = () => {
     });
   };
 // useUser hook 수정
-export const useUser = () => {
+  export const useUser = () => {
     return useQuery<UserInfo | null>({
       queryKey: ['user'],
       queryFn: async () => {
@@ -178,7 +179,8 @@ export const useUser = () => {
   
     return useMutation({
       mutationFn: async () => {
-        const response = await api.delete('/api/v1/users');
+        const response = await api.delete('/api/v1/auth/social/me');
+        
         if (response.data.result.result_code !== 200) {
           throw new Error(response.data.result.result_message);
         }

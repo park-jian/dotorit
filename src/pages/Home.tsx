@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import TextEditor from "../components/TextEditor"
+
 const Main = () => {
 
   return (
@@ -11,19 +11,19 @@ const Main = () => {
           <Link to="/" className="text-blue-500 hover:underline">홈</Link>
         </li>
         <li>
-          <Link to="/login" className="text-blue-500 hover:underline">로그인</Link>
+          <Link to="/login" className="text-blue-500 hover:underline">0.로그인</Link>
         </li>
         <li>
-          <Link to="/profile" className="text-blue-500 hover:underline">프로필 설정</Link>
+          <Link to="/profile" className="text-blue-500 hover:underline">1.1프로필 설정</Link>
         </li>
         <li>
-          <Link to="/job-select" className="text-blue-500 hover:underline">직무 선택</Link>
+          <Link to="/job-select" className="text-blue-500 hover:underline">1.2직무 선택</Link>
         </li>
         <li>
-          <Link to="/interest-select" className="text-blue-500 hover:underline">관심사 선택</Link>
+          <Link to="/interest-select" className="text-blue-500 hover:underline">1.3관심사 선택</Link>
         </li>
         <li>
-          <Link to="/welcome" className="text-blue-500 hover:underline">환영 페이지</Link>
+          <Link to="/welcome" className="text-blue-500 hover:underline">1.4환영 페이지</Link>
         </li>
         <li>
           <Link to="/mypage" className="text-blue-500 hover:underline">마이 페이지</Link>
@@ -52,7 +52,9 @@ const Main = () => {
         <li>
           <Link to="/board/blog-write" className="text-blue-500 hover:underline">3.게시글 쓰기</Link>
         </li>
-        
+        <li>
+          <Link to="/board/editor" className="text-blue-500 hover:underline">editor</Link>
+        </li>
       </ul>
     </nav>
   </div>

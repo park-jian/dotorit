@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
-import api, { setAuthToken } from '../api/axiosConfig';
+import api from '../api/axiosConfig';
+import tokenUtils from '../utils/tokenUtils';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
@@ -18,7 +19,7 @@ export const useLogin = () => {
         
         if (response.data.result.result_code === 200) {
           const { access_token } = response.data.body;
-          setAuthToken(access_token);
+          tokenUtils.setTokens(access_token);
           
           // 사용자 정보 가져오기
           const userResponse = await api.get('/api/v1/users/me');
@@ -40,7 +41,7 @@ export const useLogin = () => {
 // 소셜 회원가입 훅
 export const useSignup = (social) => {
     const navigate = useNavigate();
-  
+    console.log("login social:", social)
     return useMutation({
         mutationFn: async (social) => {
             const response = await api.post(`/oauth2/authorization/${social}`);
@@ -102,7 +103,7 @@ export const useLogout = () => {
         await api.post('/api/v1/users/logout', {}, { withCredentials: true });
       },
       onSuccess: () => {
-        setAuthToken(null);
+        tokenUtils.setTokens(null);
         // 모든 쿼리 초기화
         queryClient.clear();
         navigate('/');
@@ -128,7 +129,7 @@ export const useLogout = () => {
           });
           
           if (response.data.body?.access_token) {
-            setAuthToken(response.data.body.access_token);
+            tokenUtils.setTokens(response.data.body.access_token);
             
             // 토큰 갱신 성공 시 사용자 정보도 함께 갱신
             const userResponse = await api.get('/api/v1/users/me');
@@ -150,27 +151,27 @@ export const useLogout = () => {
     });
   };
 // useUser hook 수정
-  export const useUser = () => {
-    return useQuery<UserInfo | null>({
-      queryKey: ['user'],
-      queryFn: async () => {
-        try {
-          if (!api.defaults.headers.common['Authorization']) {
-            return null;
-          }
-          const response = await api.get('/api/v1/users/me');
-          return response.data.body;
-        } catch (error) {
-          if (axios.isAxiosError(error) && error.response?.status === 401) {
-            return null;
-          }
-          throw error;
-        }
-      },
-      staleTime: Infinity,
-      retry: false,
-    });
-  };
+  // export const useUser = () => {
+  //   return useQuery<UserInfo | null>({
+  //     queryKey: ['user'],
+  //     queryFn: async () => {
+  //       try {
+  //         if (!api.defaults.headers.common['Authorization']) {
+  //           return null;
+  //         }
+  //         const response = await api.get('/api/v1/users/me');
+  //         return response.data.body;
+  //       } catch (error) {
+  //         if (axios.isAxiosError(error) && error.response?.status === 401) {
+  //           return null;
+  //         }
+  //         throw error;
+  //       }
+  //     },
+  //     staleTime: Infinity,
+  //     retry: false,
+  //   });
+  // };
 
   //탈퇴 훅
   export const useSecession = () => {
@@ -188,7 +189,7 @@ export const useLogout = () => {
       },
       onSuccess: () => {
         // 로그아웃과 동일한 처리
-        setAuthToken(null);
+        tokenUtils.setTokens(null);
         // 모든 쿼리 초기화
         queryClient.clear();
         // 홈으로 이동

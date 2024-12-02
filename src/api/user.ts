@@ -28,9 +28,9 @@ export const validateNickname = async (nickname: string) => {//닉네임 중복
     formData.append('signInUserRequest', JSON.stringify(allData));
     
     // 프로필 이미지가 있다면 추가
-    if (profileImage) {
-      formData.append('profileImage', profileImage);
-    }
+    // if (profileImage) {
+    //   formData.append('profileImage', profileImage);
+    // }
   
     try {
       const response = await fetch('/api/v1/user', {
@@ -40,6 +40,7 @@ export const validateNickname = async (nickname: string) => {//닉네임 중복
       });
       
       const result = await response.json();
+      console.log(result);
       // 응답 처리
     } catch (error) {
       console.error('Error:', error);

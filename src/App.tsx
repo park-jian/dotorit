@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Outlet, Navigate} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Outlet} from 'react-router-dom';
 import '@ckeditor/ckeditor5-build-classic/build/translations/ko';
 //import { useAppStore } from './store'
 //메인페이지
@@ -28,45 +28,6 @@ import BlogPostDetail from './pages/board/BlogPostDetail'; //게시물 보기
 import SearchFilterPage from './pages/board/SearchFilterPage';//게시물 쓰기
 import PostEditor from './pages/board/PostEditor';//에디터
 
-// import SocialLogin from './socialLogin/SocialLogin';
-// import SocialLoginRedirect from './socialLogin/SocialLoginRedirect';
-// import RegisterPage from './socialLogin/RegisterPage';
-// import AxiosTest from './socialLogin/AxiosTest';
-
-// import {AuthProvider, useAuth } from './auth/AuthContext';
-
-    // <AuthProvider>
-    //   {/* <Router> */}
-    //   <Routes>
-    //     <Route path="/login" element={
-    //       <>
-    //         <SocialLogin provider="kakao" />
-    //         <SocialLogin provider="naver" />
-    //       </>
-    //     } />
-
-    //     <Route path="/oauth/kakao/callback" element={<SocialLoginRedirect provider="kakao"/>} />
-    //     <Route path="/oauth/naver/callback" element={<SocialLoginRedirect provider="naver"/>} />
-    //     <Route path="/register" element={<RegisterPage />} />
-    //     <Route path="/axiostest" element={<AxiosTest />} />
-    //     <Route path="/" element={<Main />} />
-    //     {/* 이미지 파일을 위한 라우트 추가 */}
-    //     <Route path="*.png" element={null} />
-    //   </Routes>
-
-
-    //   {/* </Router> */}
-    //   </AuthProvider>
-    // PrivateRoute 컴포넌트 정의
-// const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-//   const { isAuthenticated } = useAuth();
-  
-//   if (!isAuthenticated) {
-//     return <Navigate to="/users/login" replace />;
-//   }
-
-//   return <>{children}</>;
-// };
     const App: React.FC = () => {
       return (
         <Router>

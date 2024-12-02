@@ -6,7 +6,7 @@ import { BottomSheet } from '../../components/BottomSheet/BottomSheet';
 import { ProfileEditContent } from '../../components/Profile/ProfileEditContent';
 import {validateNickname} from '../../api/user';
 import CameraCapture from '../../components/Profile/CameraCapture';
-import ProfileImageUpload, { createCharacterImageFile } from '../../components/Profile/ProfileImageUpload';
+import { createCharacterImageFile } from '../../components/Profile/ProfileImageUpload';
 const Profile = () => {
   const [nickname, setNickname] = useState('');
   const [nicknameValidation, setNicknameValidation] = useState({
